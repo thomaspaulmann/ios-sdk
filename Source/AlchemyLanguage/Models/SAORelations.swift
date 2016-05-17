@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,39 +24,18 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct SAORelations: AlchemyLanguageGenericModel, Mappable {
-
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: SAORelations
-    /** text inputted */
-    public var text: String?
-
-    /** results (see **SAORelation**) */
-    public var relations: [SAORelation]?
-
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct SAORelations: JSONDecodable {
+        public let language: String?
+        public let url: String?
+        public let text: String?
+        public let relations: [SAORelation]?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // saoRelations
-        text <- map["text"]
-        relations <- map["relations"]
-        
+        public init(json: JSON) throws {
+            language = try json.string("language")
+            url = try json.string("url")
+            text = try json.string("text")
+            relations = try json.arrayOf("relations", type: SAORelation.init)
+        }
     }
-    
 }

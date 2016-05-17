@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,34 +24,14 @@ import ObjectMapper
  DocumentTitle returned by the AlchemyLanguage service.
  
  */
-public struct DocumentTitle: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: DocumentTitle
-    /** returned title */
-    public var title: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct DocumentTitle: JSONDecodable {
+        public let url: String?
+        public let title: String?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // documentTitle
-        title <- map["title"]
-        
+        public init(json: JSON) throws {
+            url = try json.string("url")
+            title = try json.string("title")
+        }
     }
-    
 }

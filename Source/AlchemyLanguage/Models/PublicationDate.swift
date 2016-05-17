@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,38 +24,9 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct PublicationDate: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-
-    // MARK: PublicationDate
-    /** are we confident in our result */
-    public var confident: Bool?
-
-    /** date of publication */
-    public var date: NSDate?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
-        
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // publicationDate
-        confident <- map["confident"]
-        date <- map["date"]
-        
+extension AlchemyLanguageV1 {
+    public struct PublicationDate: JSONDecodable {
+        public let confident: String?
+        public let date: String?
     }
-
 }

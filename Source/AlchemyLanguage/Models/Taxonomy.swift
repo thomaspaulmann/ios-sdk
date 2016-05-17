@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,26 +24,16 @@ import ObjectMapper
  Child class of Taxonomies
  
  */
-public struct Taxonomy: Mappable {
-    
-    /** confidence in result: 0 or 1 */
-    public var confident: Int?
-
-    /**  category of taxonomy */
-    public var label: String?
-
-    /** confidence score for detected category, 0.0 to 1.0, higher is better */
-    public var score: Double?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Taxonomy: JSONDecodable {
+        public let confident: String?
+        public let label: String?
+        public let score: Double?
         
-        confident <- (map["confident"], Transformation.stringToInt)
-        label <- map["label"]
-        score <- (map["score"], Transformation.stringToDouble)
-        
+        public init(json: JSON) throws {
+            confident = try json.string("confident")
+            label = try json.string("label")
+            score = try Double(json.string("score"))
+        }
     }
-    
 }

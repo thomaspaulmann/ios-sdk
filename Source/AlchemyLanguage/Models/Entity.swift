@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,54 +24,34 @@ import ObjectMapper
  Returned by the AlchemyLanguage & AlchemyDataNews services.
  
  */
-public struct Entity: AlchemyGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: Entity
-    /** how often this entity is seen */
-    public var count: Int?
-
-    /** disambiguation information for the detected entity (sent only if disambiguation occurred) */
-    public var disambiguated: DisambiguatedLinks?
-
-    /** see **KnowledgeGraph** */
-    public var knowledgeGraph: KnowledgeGraph?
-
-    /** example usage of our keyword */
-    public var quotations: [Quotation]? = []
-
-    /** relevance to content */
-    public var relevance: Double?
-
-    /** sentiment concerning keyword */
-    public var sentiment: Sentiment?
-
-    /** surrounding text */
-    public var text: String?
-
-    /** Person, City, Country */
-    public var type: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Entity: JSONDecodable {
+        /** how often this entity is seen */
+        public let count: Int?
+        /** disambiguation information for the detected entity (sent only if disambiguation occurred) */
+        public let disambiguated: DisambiguatedLinks?
+        /** see **KnowledgeGraph** */
+        public let knowledgeGraph: KnowledgeGraph?
+        /** example usage of our keyword */
+        public let quotations: [Quotation]?
+        /** relevance to content */
+        public let relevance: Double?
+        /** sentiment concerning keyword */
+        public let sentiment: Sentiment?
+        /** surrounding text */
+        public let text: String?
+        /** Classification */
+        public let type: String?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // entity
-        count <- map["count"]
-        disambiguated <- map["disambiguated"]
-        knowledgeGraph <- map["knowledgeGraph"]
-        quotations <- map["quotations"]
-        relevance <- map["relevance"]
-        sentiment <- map["sentiment"]
-        text <- map["text"]
-        type <- map["type"]
-        
+        public init(json: JSON) throws {
+            count = try Int(json.string("count"))
+            disambiguated = try json.decode("disambiguated", type: DisambiguatedLinks.init)
+            knowledgeGraph = try json.decode("knowledgeGraph", type: KnowledgeGraph.init)
+            quotations = try json.arrayOf("quotations", type: Quotation.init)
+            relevance = try Double(json.string("relevance"))
+            sentiment = try json.decode("sentiment", type: Sentiment.init)
+            text = try json.string("text")
+            type = try json.string("type")
+        }
     }
-    
 }

@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,22 +24,15 @@ import ObjectMapper
  Authors returned by the AlchemyLanguage service as a property of DocumentAuthors.
  
  */
-public struct Authors: Mappable {
+extension AlchemyLanguageV1 {
     
-    // MARK: Authors
-    /** "yes" / "no" about results*/
-    public var confident: String?
-
-    /** author names*/
-    public var names: [String]?
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+    public struct Authors: JSONDecodable {
         
-        confident <- map["confident"]
-        names <- map["names"]
+        public let names: [String]
         
+        public init(json: JSON) throws {
+            names = try json.arrayOf("names", type: String)
+        }
     }
     
 }

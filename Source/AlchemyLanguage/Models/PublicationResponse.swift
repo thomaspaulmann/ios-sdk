@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2015
+ * Copyright IBM Corporation 2016
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,18 @@
 import Foundation
 import Freddy
 
-/**
- 
- **ConceptResponse**
- 
- Returned by the AlchemyLanguage service.
- 
- */
 extension AlchemyLanguageV1 {
-    public struct ConceptResponse: JSONDecodable {
-        
+    public struct PublicationResponse: JSONDecodable {
+        public let totalTransactions: Int?
         public let language: String?
         public let url: String?
-        public let concepts: [Concept]?
+        public let publicationDate: PublicationDate?
         
         public init(json: JSON) throws {
+            totalTransactions = try Int(json.string("totalTransactions"))
             language = try json.string("language")
             url = try json.string("url")
-            concepts = try json.arrayOf("concepts", type: Concept.init)
+            publicationDate = try json.decode("publicationDate", type: PublicationDate.init)
         }
     }
 }
-

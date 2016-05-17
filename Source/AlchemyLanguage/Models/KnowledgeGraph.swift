@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,26 +24,12 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct KnowledgeGraph: AlchemyGenericModel, Mappable {
-
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: KnowledgeGraph
-    /** The path through the knowledge graph to the appropriate keyword */
-    public var typeHierarchy: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct KnowledgeGraph: JSONDecodable {
+        public let typeHierarchy: String?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // knowledgeGraph
-        typeHierarchy <- map["typeHierarchy"]
-        
+        public init(json: JSON) throws {
+            typeHierarchy = json.string("typeHierarchy")
+        }
     }
-    
 }

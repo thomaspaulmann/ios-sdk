@@ -15,25 +15,19 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
  **Quotation**
  
  */
-public struct Quotation: Mappable {
-
-	/** contained quote */
-    public var quotation: String!
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Quotation: JSONDecodable {
+        public let quotation: String?
         
-        quotation <- map["quotation"]
-        
+        public init(json: JSON) throws {
+            quotation = try json.string("quotation")
+        }
     }
-    
 }

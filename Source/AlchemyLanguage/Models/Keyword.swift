@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,30 +24,19 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Keyword: Mappable {
-
-    /** The path through the knowledge graph to the appropriate keyword */
-    public var knowledgeGraph: KnowledgeGraph?
-
-    /** relevance to inputted content */
-    public var relevance: Double?
-
-    /** sentiment concerning content */
-    public var sentiment: Sentiment?
-
-    /** related text */
-    public var text: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Keyword: JSONDecodable {
+        public let knowledgeGraph: KnowledgeGraph?
+        public let relevance: Double?
+        public let sentiment: Sentiment?
+        public let text: String?
         
-        knowledgeGraph <- map["knowledgeGraph"]
-        relevance <- (map["relevance"], Transformation.stringToDouble)
-        sentiment <- map["sentiment"]
-        text <- map["text"]
-        
+        public init(json: JSON) throws {
+            knowledgeGraph = try json.decode("knowledgeGraph", type: KnowledgeGraph.init)
+            relevance = try Double(json.string("relevance"))
+            sentiment = try json.decode("sentiment", type: Sentiment.init)
+            text = try json.string("text")
+        }
     }
     
 }

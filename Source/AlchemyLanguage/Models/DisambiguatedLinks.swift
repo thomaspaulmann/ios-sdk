@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,116 +24,67 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct DisambiguatedLinks: AlchemyLanguageGenericModel, Mappable {
-
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: DisambiguatedLinks
-    /**
-    * The link to the US Census for the disambiguated entity. Note: Provided only for
-    * entities that exist in this linked data-set.
-    */
-    public var census: String?
-    
-    /**
-    * The cia link to the CIA World Factbook for the disambiguated entity. Note: Provided
-    * only for entities that exist in this linked data-set.
-    */
-    public var ciaFactbook: String?
-    
-    /**
-    * The link to CrunchBase for the disambiguated entity. Note: Provided only for
-    * entities that exist in CrunchBase.
-    */
-    public var crunchbase: String?
-    
-    /**
-    * The link to DBpedia for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var dbpedia: String?
-    
-    /**
-    * The link to Freebase for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var freebase: String?
-    
-    /** The geographic coordinates. */
-    public var geo: String?
-    
-    /**
-    * The link to Geonames for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var geonames: String?
-
-    /**
-    * The music link to MusicBrainz for the disambiguated entity. Note: Provided only for
-    * entities that exist in this linked data-set.
-    */
-    public var musicBrainz: String?
-    
-    /** The entity name. */
-    public var name: String?
-    
-    /**
-    * The link to OpenCyc for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var opencyc: String?
-    
-    /**  The disambiguated entity subType. */
-    public var subType: [String]?
-    
-    /**
-    * The link to UMBEL for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var umbel: String?
-    
-    /** The website. */
-    public var website: String?
-    
-    /**
-    * The link to YAGO for the disambiguated entity. Note: Provided only for entities
-    * that exist in this linked data-set.
-    */
-    public var yago: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct DisambiguatedLinks: JSONDecodable {
+        public let language: String?
+        public let url: String?
+        public let census: String?
+        public let ciaFactbook: String?
+        public let crunchbase: String?
+        public let dbpedia: String?
+        public let freebase: String?
+        public let geo: String?
+        public let geonames: String?
+        /**
+         * The music link to MusicBrainz for the disambiguated entity. Note: Provided only for
+         * entities that exist in this linked data-set.
+         */
+        public let musicBrainz: String?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
+        /** The entity name. */
+        public let name: String?
         
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
+        /**
+         * The link to OpenCyc for the disambiguated entity. Note: Provided only for entities
+         * that exist in this linked data-set.
+         */
+        public let opencyc: String?
         
-        // disambiguatedLinks
-        census <- map["census"]
-        ciaFactbook <- map["ciaFactbook"]
-        crunchbase <- map["crunchbase"]
-        dbpedia <- map["dbpedia"]
-        freebase <- map["freebase"]
-        geo <- map["geo"]
-        geonames <- map["geonames"]
-        musicBrainz <- map["musicBrainz"]
-        name <- map["name"]
-        opencyc <- map["opencyc"]
-        subType <- map["subType"]
-        umbel <- map["umbel"]
-        website <- map["website"]
-        yago <- map["yago"]
+        /**  The disambiguated entity subType. */
+        public let subType: [String]?
         
+        /**
+         * The link to UMBEL for the disambiguated entity. Note: Provided only for entities
+         * that exist in this linked data-set.
+         */
+        public let umbel: String?
+        
+        /** The website. */
+        public let website: String?
+        
+        /**
+         * The link to YAGO for the disambiguated entity. Note: Provided only for entities
+         * that exist in this linked data-set.
+         */
+        public let yago: String?
+        
+        public init(json: JSON) throws {
+            language = try json.string("language")
+            url = try json.string("url")
+            census = try json.string("census")
+            ciaFactbook = try json.string("ciaFactbook")
+            crunchbase = try json.string("crunchbase")
+            dbpedia = try json.string("dbpedia")
+            freebase = try json.string("freebase")
+            geo = try json.string("geo")
+            geonames = try json.string("geonames")
+            musicBrainz = try json.string("musicBrainz")
+            name = try json.string("name")
+            opencyc = try json.string("opencyc")
+            subType = try json.arrayOf("subType", type: String)
+            umbel = try json.string("umbel")
+            website = try json.string("website")
+            yago = try json.string("yago")
+        }
     }
-
 }

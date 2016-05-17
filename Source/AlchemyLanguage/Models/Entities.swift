@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,34 +24,18 @@ import ObjectMapper
  Entities returned by the AlchemyLanguage service.
  
  */
-public struct Entities: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: Entities
-    public var entities: [Entity]? = []
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Entitites: JSONDecodable {
+        public let language: String?
+        public let url: String?
+        public let text: String?
+        public let entitites: [Entity]?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // entities
-        /** result, see **Entity** */
-        entities <- map["entities"]
-        
+        public init(json: JSON) throws {
+            language = try json.string("language")
+            url = try json.string("url")
+            text = try json.string("text")
+            entitites = try json.arrayOf("entities", type: Entity.init)
+        }
     }
-    
 }

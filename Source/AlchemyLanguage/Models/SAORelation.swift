@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,132 +24,70 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct SAORelation: Mappable {
-    
-    /** how an object relates */
-    public var action: Action?
-
-    /** sentence in which it's used */
-    public var sentence: String?
-
-    /** object that acts upon another */
-    public var object: RelationObject?
-
-    /** subject of object's action */
-    public var subject: Subject?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct SAORelation: JSONDecodable {
+        public let action: Action?
+        public let sentence: String?
+        public let subject: Subject?
+        public let object: RelationObject?
         
-        action <- map["action"]
-        object <- map["object"]
-        sentence <- map["sentence"]
-        subject <- map["subject"]
-        
-    }
-    
-}
-
-
-// MARK: **Action**
-extension SAORelation {
-    
-    public struct Action: Mappable {
-        
-        public var lemmatized: String?
-        public var text: String?
-        public var verb: Verb?
-        
-        
-        public init?(_ map: Map) {}
-        
-        public mutating func mapping(map: Map) {
-            
-            lemmatized <- map["lemmatized"]
-            text <- map["text"]
-            verb <- map["verb"]
-            
+        public init(json: JSON) throws {
+            action = try json.decode("action", type: Action.init)
+            sentence = try json.string("sentence")
+            subject = try json.decode("subject", type: Subject.init)
+            object = try json.decode("object", type: RelationObject.init)
         }
         
     }
     
-    // MARK: Verb
-    public struct Verb: Mappable {
+    public struct Action: JSONDecodable {
+        public let text: String?
+        public let lemmatized: String?
+        public let verb: Verb?
         
-        public var negated: Int?
-        public var tense: String?
-        public var text: String?
-        
-        
-        public init?(_ map: Map) {}
-        
-        public mutating func mapping(map: Map) {
-
-            negated <- (map["negated"], Transformation.stringToInt)
-            tense <- map["tense"]
-            text <- map["text"]
-            
+        init(json: JSON) throws {
+            text = try json.string("text")
+            lemmatized = try json.string("lemmatized")
+            verb = try json.decode("verb", type: Verb.init)
         }
         
+        public struct Verb: JSONDecodable {
+            public let text: String?
+            public let tense: String?
+            public let negated: Int?
+            
+            init(json: JSON) throws {
+                text = try json.string("text")
+                tense = try json.string("tense")
+                negated = try Int(json.string("negated"))
+            }
+        }
+    }
+    
+    public struct Subject: JSONDecodable {
+        public let text: String?
+        public let sentiment: Sentiment?
+        public let entity: Entity?
+        
+        init(json: JSON) throws {
+            text = try json.string("text")
+            sentiment = try json.decode("sentiment", type: Sentiment.init)
+            entity = try json.decode("entity", type: Entity.init)
+        }
+    }
+    
+    public struct RelationObject: JSONDecodable {
+        public let text: String?
+        public let sentiment: Sentiment?
+        public let sentimentFromSubject: Sentiment?
+        public let entity: Entity?
+        
+        init(json: JSON) throws {
+            text = try json.string("text")
+            sentiment = try json.decode("sentiment", type: Sentiment.init)
+            sentimentFromSubject = try json.decode("sentimentFromSubject", type: Sentiment.init)
+            entity = try json.decode("entity", type: Entity.init)
+        }
     }
     
 }
-
-
-// MARK: **RelationObject**
-extension SAORelation {
-    
-    public struct RelationObject: Mappable {
-
-        public var entity: Entity?
-        public var keywords: Keywords?
-        public var sentiment: Sentiment?
-        public var sentimentFromSubject: Sentiment?
-        public var text: String?
-        
-        
-        public init?(_ map: Map) {}
-
-        public mutating func mapping(map: Map) {
-
-            entity <- map["entity"]
-            keywords <- map["keywords"]
-            sentiment <- map["sentiment"]
-            sentimentFromSubject <- map["sentimentFromSubject"]
-            text <- map["text"]
-
-        }
-        
-    }
-    
-}
-
-
-// MARK: **Subject**
-extension SAORelation {
-    
-    public struct Subject: Mappable {
-        
-        public var entity: Entity?
-        public var keywords: Keywords?
-        public var sentiment: Sentiment?
-        public var text: String?
-        
-        
-        public init?(_ map: Map) {}
-        
-        public mutating func mapping(map: Map) {
-            
-            entity <- map["entity"]
-            keywords <- map["keywords"]
-            sentiment <- map["sentiment"]
-            text <- map["text"]
-            
-        }
-        
-    }
-    
-}
-

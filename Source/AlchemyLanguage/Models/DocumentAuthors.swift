@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,7 +24,20 @@ import ObjectMapper
  DocumentAuthors returned by the AlchemyLanguage service.
  
  */
-public struct DocumentAuthors: AlchemyLanguageGenericModel, Mappable {
+extension AlchemyLanguageV1 {
+    public struct DocumentAuthors: JSONDecodable {
+        public let url: String
+        
+        public let authors: Authors
+        
+        public init(json: JSON) throws {
+            url = try json.string("url")
+            authors = try json.decode("authors", type: Authors.init)
+        }
+    }
+}
+
+/*public struct DocumentAuthors: AlchemyLanguageGenericModel, Mappable {
     
     // MARK: AlchemyGenericModel
     public var totalTransactions: Int?
@@ -54,4 +67,4 @@ public struct DocumentAuthors: AlchemyLanguageGenericModel, Mappable {
         
     }
     
-}
+}*/

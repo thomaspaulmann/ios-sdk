@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,38 +24,20 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Keywords: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: Keywords
-    /** keywords response (see **Keyword**) */
-    public var keywords: [Keyword]?
-
-    /** inputted text */
-    public var text: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Keywords: JSONDecodable {
+        public let totalTransactions: Int?
+        public let language: String?
+        public let url: String?
+        public let keywords: [Keyword]?
+        public let text: String?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // keywords
-        keywords <- map["keywords"]
-        text <- map["text"]
-        
+        public init(json: JSON) throws {
+            totalTransactions = try Int(json.string("totalTransactions"))
+            language = try json.string("language")
+            url = try json.string("url")
+            keywords = try json.arrayOf("keywords", type: Keyword.init)
+            text = try json.string("text")
+        }
     }
-    
 }

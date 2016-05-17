@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,26 +24,16 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Sentiment: Mappable {
-    
-    /** is a mix of positive, neutral, and/or negative sentiments detected */
-    public var mixed: Int?
-
-    /** strength of prevalent sentiment, 0.0 to 1.0 */
-    public var score: Double?
-
-    /** "positive", "neutral", or "negative" */
-    public var type: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Sentiment: JSONDecodable {
+        public let mixed: Int?
+        public let score: Double?
+        public let type: String?
         
-        mixed <- (map["mixed"], Transformation.stringToInt)
-        score <- (map["score"], Transformation.stringToDouble)
-        type <- map["type"]
-        
+        public init(json: JSON) throws {
+            mixed = try Int(json.string("mixed"))
+            score = try Double(json.string("score"))
+            type = try json.string("tyoe")
+        }
     }
-    
 }

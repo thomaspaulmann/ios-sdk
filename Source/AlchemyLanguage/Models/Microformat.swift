@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,22 +24,14 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Microformat: Mappable {
-    
-    /** structured microformats data (hCard, etc.) extracted from this web page */
-    public var data: String?
-
-    /** (undocumented) */
-    public var field: String?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Microformat: JSONDecodable {
+        public let fieldData: String?
+        public let fieldName: String?
         
-        data <- map["data"]
-        field <- map["field"]
-
+        public init(json: JSON) throws {
+            fieldData = json.string("fieldData")
+            fieldName = json.string("fieldName")
+        }
     }
-    
 }

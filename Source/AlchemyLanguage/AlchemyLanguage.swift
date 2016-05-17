@@ -36,7 +36,7 @@ import ObjectMapper
  * Feed Detection
  * Linked Data Support
  */
-public final class AlchemyLanguage: AlchemyService {
+public final class AlchemyLanguageV1: AlchemyService {
     
     // The authentication strategy to obtain authorization tokens.
     let authStrategy: AuthenticationStrategy

@@ -15,7 +15,7 @@
  **/
 
 import Foundation
-import ObjectMapper
+import Freddy
 
 /**
  
@@ -24,34 +24,14 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Microformats: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: Keywords
-    /** results (see **Microformat**) */
-    public var microformats: [Microformat]?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Microformats: JSONDecodable {
+        public let url: String?
+        public let microformats: [Microformat]?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // keywords
-        microformats <- map["microformats"]
-        
+        public init(json: JSON) throws {
+            url = try json.string("url")
+            microformats = try json.arrayOf("microformats", type: Microformat.init)
+        }
     }
-    
 }

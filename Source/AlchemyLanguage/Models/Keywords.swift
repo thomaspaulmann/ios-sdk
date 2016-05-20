@@ -33,11 +33,15 @@ extension AlchemyLanguageV1 {
         public let text: String?
         
         public init(json: JSON) throws {
-            totalTransactions = try Int(json.string("totalTransactions"))
-            language = try json.string("language")
-            url = try json.string("url")
-            keywords = try json.arrayOf("keywords", type: Keyword.init)
-            text = try json.string("text")
+            if let totalTransactionsString = try? json.string("totalTransactions") {
+                totalTransactions = Int(totalTransactionsString)
+            } else {
+                totalTransactions = 1
+            }
+            language = try? json.string("language")
+            url = try? json.string("url")
+            keywords = try? json.arrayOf("keywords", type: Keyword.self)
+            text = try? json.string("text")
         }
     }
 }

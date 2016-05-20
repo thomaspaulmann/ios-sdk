@@ -37,7 +37,7 @@ extension AlchemyLanguageV1 {
             language = try json.string("language")
             url = try json.string("url")
             text = try json.string("text")
-            taxonomy = try json.arrayOf("taxonomy", type: Taxonomy.init)
+            taxonomy = try json.arrayOf("taxonomy", type: Taxonomy.self)
         }
     }
 }

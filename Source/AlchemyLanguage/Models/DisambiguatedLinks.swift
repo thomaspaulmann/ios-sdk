@@ -81,7 +81,7 @@ extension AlchemyLanguageV1 {
             musicBrainz = try json.string("musicBrainz")
             name = try json.string("name")
             opencyc = try json.string("opencyc")
-            subType = try json.arrayOf("subType", type: String)
+            subType = try json.arrayOf("subType", type: Swift.String)
             umbel = try json.string("umbel")
             website = try json.string("website")
             yago = try json.string("yago")

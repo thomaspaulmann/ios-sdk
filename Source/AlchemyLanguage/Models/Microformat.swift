@@ -30,8 +30,8 @@ extension AlchemyLanguageV1 {
         public let fieldName: String?
         
         public init(json: JSON) throws {
-            fieldData = json.string("fieldData")
-            fieldName = json.string("fieldName")
+            fieldData = try? json.string("fieldData")
+            fieldName = try? json.string("fieldName")
         }
     }
 }

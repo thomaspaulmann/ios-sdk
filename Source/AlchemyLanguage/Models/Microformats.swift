@@ -30,8 +30,8 @@ extension AlchemyLanguageV1 {
         public let microformats: [Microformat]?
         
         public init(json: JSON) throws {
-            url = try json.string("url")
-            microformats = try json.arrayOf("microformats", type: Microformat.init)
+            url = try? json.string("url")
+            microformats = try? json.arrayOf("microformats", type: Microformat.self)
         }
     }
 }

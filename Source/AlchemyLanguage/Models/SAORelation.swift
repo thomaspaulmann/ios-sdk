@@ -32,10 +32,10 @@ extension AlchemyLanguageV1 {
         public let object: RelationObject?
         
         public init(json: JSON) throws {
-            action = try json.decode("action", type: Action.init)
+            action = try json.decode("action", type: Action.self)
             sentence = try json.string("sentence")
-            subject = try json.decode("subject", type: Subject.init)
-            object = try json.decode("object", type: RelationObject.init)
+            subject = try json.decode("subject", type: Subject.self)
+            object = try json.decode("object", type: RelationObject.self)
         }
         
     }
@@ -45,10 +45,10 @@ extension AlchemyLanguageV1 {
         public let lemmatized: String?
         public let verb: Verb?
         
-        init(json: JSON) throws {
+        public init(json: JSON) throws {
             text = try json.string("text")
             lemmatized = try json.string("lemmatized")
-            verb = try json.decode("verb", type: Verb.init)
+            verb = try json.decode("verb", type: Verb.self)
         }
         
         public struct Verb: JSONDecodable {
@@ -56,7 +56,7 @@ extension AlchemyLanguageV1 {
             public let tense: String?
             public let negated: Int?
             
-            init(json: JSON) throws {
+            public init(json: JSON) throws {
                 text = try json.string("text")
                 tense = try json.string("tense")
                 negated = try Int(json.string("negated"))
@@ -69,10 +69,10 @@ extension AlchemyLanguageV1 {
         public let sentiment: Sentiment?
         public let entity: Entity?
         
-        init(json: JSON) throws {
+        public init(json: JSON) throws {
             text = try json.string("text")
-            sentiment = try json.decode("sentiment", type: Sentiment.init)
-            entity = try json.decode("entity", type: Entity.init)
+            sentiment = try json.decode("sentiment", type: Sentiment.self)
+            entity = try json.decode("entity", type: Entity.self)
         }
     }
     
@@ -82,11 +82,11 @@ extension AlchemyLanguageV1 {
         public let sentimentFromSubject: Sentiment?
         public let entity: Entity?
         
-        init(json: JSON) throws {
+        public init(json: JSON) throws {
             text = try json.string("text")
-            sentiment = try json.decode("sentiment", type: Sentiment.init)
-            sentimentFromSubject = try json.decode("sentimentFromSubject", type: Sentiment.init)
-            entity = try json.decode("entity", type: Entity.init)
+            sentiment = try json.decode("sentiment", type: Sentiment.self)
+            sentimentFromSubject = try json.decode("sentimentFromSubject", type: Sentiment.self)
+            entity = try json.decode("entity", type: Entity.self)
         }
     }
     

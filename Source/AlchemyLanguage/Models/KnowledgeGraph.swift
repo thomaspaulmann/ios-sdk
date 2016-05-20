@@ -29,7 +29,7 @@ extension AlchemyLanguageV1 {
         public let typeHierarchy: String?
         
         public init(json: JSON) throws {
-            typeHierarchy = json.string("typeHierarchy")
+            typeHierarchy = try? json.string("typeHierarchy")
         }
     }
 }

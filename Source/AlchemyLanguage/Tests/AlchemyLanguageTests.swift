@@ -23,7 +23,7 @@ class AlchemyLanguageTests: XCTestCase {
     private let timeout: NSTimeInterval = 60.0
     
     // main instance
-    var instance: AlchemyLanguage!
+    var instance: AlchemyLanguageV1!
     
     // test strings
     let test_url = "http://en.wikipedia.org/wiki/Vladimir_Putin"

@@ -44,14 +44,22 @@ extension AlchemyLanguageV1 {
         public let type: String?
         
         public init(json: JSON) throws {
-            count = try Int(json.string("count"))
-            disambiguated = try json.decode("disambiguated", type: DisambiguatedLinks.init)
-            knowledgeGraph = try json.decode("knowledgeGraph", type: KnowledgeGraph.init)
-            quotations = try json.arrayOf("quotations", type: Quotation.init)
-            relevance = try Double(json.string("relevance"))
-            sentiment = try json.decode("sentiment", type: Sentiment.init)
-            text = try json.string("text")
-            type = try json.string("type")
+            if let countString = try? json.string("count") {
+                count = Int(countString)
+            } else {
+                count = nil
+            }
+            disambiguated = try? json.decode("disambiguated", type: DisambiguatedLinks.self)
+            knowledgeGraph = try? json.decode("knowledgeGraph", type: KnowledgeGraph.self)
+            quotations = try? json.arrayOf("quotations", type: Quotation.self)
+            if let relevanceString = try? json.string("relevance") {
+                relevance = Double(relevanceString)
+            } else {
+                relevance = nil
+            }
+            sentiment = try? json.decode("sentiment", type: Sentiment.self)
+            text = try? json.string("text")
+            type = try? json.string("type")
         }
     }
 }

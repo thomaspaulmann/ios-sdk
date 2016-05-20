@@ -31,7 +31,7 @@ extension AlchemyLanguageV1 {
         public let names: [String]
         
         public init(json: JSON) throws {
-            names = try json.arrayOf("names", type: String)
+            names = try json.arrayOf("names", type: Swift.String)
         }
     }
     

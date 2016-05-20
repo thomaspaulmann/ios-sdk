@@ -28,5 +28,10 @@ extension AlchemyLanguageV1 {
     public struct PublicationDate: JSONDecodable {
         public let confident: String?
         public let date: String?
+        
+        public init(json: JSON) throws {
+            confident = try? json.string("confident")
+            date = try? json.string("date")
+        }
     }
 }

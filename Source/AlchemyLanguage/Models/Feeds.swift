@@ -15,6 +15,7 @@
  **/
 
 import Foundation
+import Freddy
 import ObjectMapper
 
 /**
@@ -24,34 +25,18 @@ import ObjectMapper
  Returned by the AlchemyLanguage service.
  
  */
-public struct Feeds: AlchemyLanguageGenericModel, Mappable {
-
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: Feeds
-    /** results, see **Feed** */
-    public var feeds: [Feed]?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
+extension AlchemyLanguageV1 {
+    public struct Feeds: JSONDecodable {
+        public let totalTransactions: Int?
+        public let language: String?
+        public let url: String?
+        public let feeds: [Feed]?
         
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // feeds
-        feeds <- map["feeds"]
-        
+        public init(json: JSON) throws {
+            totalTransactions = try Int(json.string("totalTransactions"))
+            language = try json.string("language")
+            url = try json.string("url")
+            feeds = try json.arrayOf("feeds", type: Feed.self)
+        }
     }
-
 }

@@ -32,7 +32,7 @@ extension AlchemyLanguageV1 {
         
         public init(json: JSON) throws {
             url = try json.string("url")
-            authors = try json.decode("authors", type: Authors.init)
+            authors = try json.decode("authors", type: Authors.self)
         }
     }
 }

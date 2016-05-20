@@ -29,12 +29,18 @@ extension AlchemyLanguageV1 {
         
         public let language: String?
         public let url: String?
+        public let totalTransactions: Int?
         public let concepts: [Concept]?
         
         public init(json: JSON) throws {
-            language = try json.string("language")
-            url = try json.string("url")
-            concepts = try json.arrayOf("concepts", type: Concept.init)
+            language = try? json.string("language")
+            url = try? json.string("url")
+            if let totalTransactionsString = try? json.string("totalTransactions") {
+                totalTransactions = Int(totalTransactionsString)
+            } else {
+                totalTransactions = 1
+            }
+            concepts = try json.arrayOf("concepts", type: Concept.self)
         }
     }
 }

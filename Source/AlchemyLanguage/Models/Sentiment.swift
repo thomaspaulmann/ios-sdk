@@ -31,9 +31,17 @@ extension AlchemyLanguageV1 {
         public let type: String?
         
         public init(json: JSON) throws {
-            mixed = try Int(json.string("mixed"))
-            score = try Double(json.string("score"))
-            type = try json.string("tyoe")
+            if let mixString = try? json.string("mixed") {
+                mixed = Int(mixString)
+            } else {
+                mixed = nil
+            }
+            if let scoreString = try? json.string("score") {
+                score = Double(scoreString)
+            } else {
+                score = nil
+            }
+            type = try? json.string("type")
         }
     }
 }

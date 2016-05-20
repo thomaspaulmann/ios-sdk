@@ -35,7 +35,7 @@ extension AlchemyLanguageV1 {
             language = try json.string("language")
             url = try json.string("url")
             text = try json.string("text")
-            relations = try json.arrayOf("relations", type: SAORelation.init)
+            relations = try json.arrayOf("relations", type: SAORelation.self)
         }
     }
 }

@@ -38,7 +38,7 @@ extension AlchemyLanguageV1 {
             language = try json.string("language")
             url = try json.string("url")
             text = try json.string("text")
-            docSentiment = try json.decode("docSentiment", type: Sentiment.init)
+            docSentiment = try json.decode("docSentiment", type: Sentiment.self)
         }
     }
 }

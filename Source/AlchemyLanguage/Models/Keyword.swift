@@ -32,10 +32,14 @@ extension AlchemyLanguageV1 {
         public let text: String?
         
         public init(json: JSON) throws {
-            knowledgeGraph = try json.decode("knowledgeGraph", type: KnowledgeGraph.init)
-            relevance = try Double(json.string("relevance"))
-            sentiment = try json.decode("sentiment", type: Sentiment.init)
-            text = try json.string("text")
+            knowledgeGraph = try? json.decode("knowledgeGraph", type: KnowledgeGraph.self)
+            if let relevanceString = try? json.string("relevance") {
+                relevance = Double(relevanceString)
+            } else {
+                relevance = nil
+            }
+            sentiment = try? json.decode("sentiment", type: Sentiment.self)
+            text = try? json.string("text")
         }
     }
     

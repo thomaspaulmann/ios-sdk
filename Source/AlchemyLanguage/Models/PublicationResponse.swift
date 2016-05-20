@@ -25,10 +25,14 @@ extension AlchemyLanguageV1 {
         public let publicationDate: PublicationDate?
         
         public init(json: JSON) throws {
-            totalTransactions = try Int(json.string("totalTransactions"))
+            if let totalTransactionsString = try? json.string("totalTransactions") {
+                totalTransactions = Int(totalTransactionsString)
+            } else {
+                totalTransactions = 1
+            }
             language = try json.string("language")
             url = try json.string("url")
-            publicationDate = try json.decode("publicationDate", type: PublicationDate.init)
+            publicationDate = try json.decode("publicationDate", type: PublicationDate.self)
         }
     }
 }

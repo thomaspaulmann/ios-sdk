@@ -28,6 +28,7 @@ extension AlchemyLanguageV1 {
     public struct DocumentAuthors: JSONDecodable {
         public let url: String
         
+        /** results, see **Authors** */
         public let authors: Authors
         
         public init(json: JSON) throws {
@@ -36,35 +37,3 @@ extension AlchemyLanguageV1 {
         }
     }
 }
-
-/*public struct DocumentAuthors: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: DocumentAuthors
-    /** results, see **Authors** */
-    public var authors: Authors?
-    
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
-        
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // documentAuthors
-        authors <- map["authors"]
-        
-    }
-    
-}*/

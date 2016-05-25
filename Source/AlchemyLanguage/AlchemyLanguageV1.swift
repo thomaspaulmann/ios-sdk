@@ -18,6 +18,11 @@ import Foundation
 import Alamofire
 import Freddy
 
+/**
+ The AlchemyLanguage API utilizes sophisticated natural language processing techniques to provide 
+ high-level semantic information about your content.
+ */
+
 public class AlchemyLanguageV1 {
     
     private let apiKey: String
@@ -29,6 +34,9 @@ public class AlchemyLanguageV1 {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
         "1234567890-._~")
     
+    /**
+     Initilizes the AlchemyLanguage service
+     */
     public init(apiKey: String) {
         self.apiKey = apiKey
     }
@@ -79,6 +87,13 @@ public class AlchemyLanguageV1 {
         return body
     }
     
+    /**
+     Extracts the Author(s) of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Author information
+     */
     public func getAuthorsURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -110,6 +125,14 @@ public class AlchemyLanguageV1 {
         
     }
     
+    /**
+     Extracts the Author(s) of given content.
+     
+     - parameter html:    an HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Author information
+     */
     public func getAuthorsHtml(
         html: NSURL,
         url: String? = nil,
@@ -148,6 +171,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Concepts of given content.
+     
+     - parameter url:            the URL of the content
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Concept information
+     */
     public func getRankedConceptsURL(
         url: String,
         knowledgeGraph: Bool? = false,
@@ -182,6 +213,15 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the concepts of given content.
+     
+     - parameter html:           an HTML document
+     - parameter url:            a reference to where the HTML is located
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Concept information
+     */
     public func getRankedConceptsHtml(
         html: NSURL,
         url: String? = nil,
@@ -227,6 +267,14 @@ public class AlchemyLanguageV1 {
         
     }
     
+    /**
+     Calculates the concepts of given content.
+     
+     - parameter text:           a Text document
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Concept information
+     */
     public func getRankedConceptsText(
         text: NSURL,
         knowledgeGraph: Bool? = false,
@@ -269,6 +317,21 @@ public class AlchemyLanguageV1 {
     
     // TODO: Review this. I don't like how large the signature is
     // TODO: What is 'structuredEntities'? I don't understand what that parameter actually does
+    
+    /**
+     Calculates the Entities of given content.
+     
+     - parameter url:                  the URL of the content
+     - parameter knowledgeGraph:       whether to include a knowledgeGraph calculation
+     - parameter disambiguateEntities: whether to include disambiguate entities
+     - parameter linkedData:           whether to include linked data
+     - parameter coreference:          whether to include coreferences
+     - parameter sentiment:            whether to include sentiment analysis
+     - parameter quotations:           whether to inlcude quotations
+     - parameter structuredEntities:   whether to include structured entities
+     - parameter failure:              a function executed if the call fails
+     - parameter success:              a function executed with Entity information
+     */
     public func getRankedNamedEntitiesURL(
         url: String,
         knowledgeGraph: Bool? = false,
@@ -320,6 +383,21 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Entities of given content.
+     
+     - parameter html:                 a HTML document
+     - parameter url:                  a reference to where the HTML is located
+     - parameter knowledgeGraph:       whether to include a knowledgeGraph calculation
+     - parameter disambiguateEntities: whether to include disambiguate entities
+     - parameter linkedData:           whether to include linked data
+     - parameter coreference:          whether to include coreferences
+     - parameter sentiment:            whether to include sentiment analysis
+     - parameter quotations:           whether to inlcude quotations
+     - parameter structuredEntities:   whether to include structured entities
+     - parameter failure:              a function executed if the call fails
+     - parameter success:              a function executed with Entity information
+     */
     public func getRankedNamedEntitiesHtml(
         html: NSURL,
         url: String?,
@@ -390,6 +468,20 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Entities of given content.
+     
+     - parameter text:                 a Text document
+     - parameter knowledgeGraph:       whether to include a knowledgeGraph calculation
+     - parameter disambiguateEntities: whether to include disambiguate entities
+     - parameter linkedData:           whether to include linked data
+     - parameter coreference:          whether to include coreferences
+     - parameter sentiment:            whether to include sentiment analysis
+     - parameter quotations:           whether to inlcude quotations
+     - parameter structuredEntities:   whether to include structured entities
+     - parameter failure:              a function executed if the call fails
+     - parameter success:              a function executed with Entity information
+     */
     public func getRankedNamedEntitiesHtml(
         text: NSURL,
         knowledgeGraph: Bool? = false,
@@ -456,6 +548,16 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Keywords of given content.
+     
+     - parameter url:            the URL of the content
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter strictMode:     whether to run in strict mode
+     - parameter sentiment:      whether to include sentiment analysis
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Keyword information
+     */
     public func getRankedKeywordsURL(
         url: String,
         knowledgeGraph: Bool? = false,
@@ -499,6 +601,17 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Keywords of given content.
+     
+     - parameter html:           a HTML document
+     - parameter url:            a reference to where the HTML is located
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter strictMode:     whether to run in strict mode
+     - parameter sentiment:      whether to include sentiment analysis
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Keyword information
+     */
     public func getRankedKeywordsHtml(
         html: NSURL,
         url: String? = nil,
@@ -555,6 +668,16 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Keywords of given content.
+     
+     - parameter text:           a Text document
+     - parameter knowledgeGraph: whether to include a knowledgeGraph calculation
+     - parameter strictMode:     whether to run in strict mode
+     - parameter sentiment:      whether to include sentiment analysis
+     - parameter failure:        a function executed if the call fails
+     - parameter success:        a function executed with Keyword information
+     */
     public func getRankedKeywordsText(
         text: NSURL,
         knowledgeGraph: Bool? = false,
@@ -607,6 +730,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the language of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Language information
+     */
     public func getLanguageURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -636,6 +766,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the language of given content.
+     
+     - parameter text:    a Text document
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Language information
+     */
     public func getLanguageText(
         text: NSURL,
         failure: (NSError -> Void)? = nil,
@@ -670,6 +807,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Microformat Data of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Microformat information
+     */
     public func getMicroformatDataURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -699,6 +843,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Microformat Data of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Microformat information
+     */
     // The fact URL is required here is a bug.
     public func getMicroformatDataHtml(
         html: NSURL,
@@ -738,6 +890,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Publication Date of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Publication information
+     */
     public func getPubDateURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -767,6 +926,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Publication Date of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Publication information
+     */
     public func getPubDateHtml(
         html: NSURL,
         url: String? = nil,
@@ -805,7 +972,22 @@ public class AlchemyLanguageV1 {
         }
     }
     
-    // TODO: The HTML and TEXT methods for this
+    /**
+     Extracts the Subject-Action-Object relations of given content.
+     
+     - parameter url:                      the URL of the content
+     - parameter disambiguateEntities:     whether to include disambiguate entities
+     - parameter linkedData:               whether to include linked data
+     - parameter coreference:              whether to include coreferences
+     - parameter sentiment:                whether to include sentiment analysis
+     - parameter keywords:                 whether to include keyword extraction
+     - parameter entities:                 whether to include entity extraction
+     - parameter requireEntities:          whether to incldue relations that contain at least one
+                                           named entity
+     - parameter sentimentExcludeEntities: whether to include relation info in sentiment analysis
+     - parameter failure:                  a function executed if the call fails
+     - parameter success:                  a function executed with Relationship information
+     */
     // TODO: Discuss this. I'm not a huge fan of how huge the signature is
     public func getRelationsURL(
         url: String,
@@ -863,6 +1045,23 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Subject-Action-Object relations of given content.
+     
+     - parameter html:                     a HTML document
+     - parameter url:                      a reference to where the HTML is located
+     - parameter disambiguateEntities:     whether to include disambiguate entities
+     - parameter linkedData:               whether to include linked data
+     - parameter coreference:              whether to include coreferences
+     - parameter sentiment:                whether to include sentiment analysis
+     - parameter keywords:                 whether to include keyword extraction
+     - parameter entities:                 whether to include entity extraction
+     - parameter requireEntities:          whether to incldue relations that contain at least one
+                                           named entity
+     - parameter sentimentExcludeEntities: whether to include relation info in sentiment analysis
+     - parameter failure:                  a function executed if the call fails
+     - parameter success:                  a function executed with Relationship information
+     */
     public func getRelationsHtml(
         html: NSURL,
         url: String? = nil,
@@ -939,6 +1138,22 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Subject-Action-Object relations of given content.
+     
+     - parameter text:                     a Text document
+     - parameter disambiguateEntities:     whether to include disambiguate entities
+     - parameter linkedData:               whether to include linked data
+     - parameter coreference:              whether to include coreferences
+     - parameter sentiment:                whether to include sentiment analysis
+     - parameter keywords:                 whether to include keyword extraction
+     - parameter entities:                 whether to include entity extraction
+     - parameter requireEntities:          whether to incldue relations that contain at least one
+                                           named entity
+     - parameter sentimentExcludeEntities: whether to include relation info in sentiment analysis
+     - parameter failure:                  a function executed if the call fails
+     - parameter success:                  a function executed with Relationship information
+     */
     public func getRelationsText(
         text: NSURL,
         knowledgeGraph: Bool? = false,
@@ -1011,7 +1226,13 @@ public class AlchemyLanguageV1 {
         }
     }
 
-    
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTextSentimentURL(
     url: String,
     failure: (NSError -> Void)? = nil,
@@ -1041,6 +1262,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTextSentimentHtml(
         html: NSURL,
         url: String? = nil,
@@ -1079,6 +1308,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter text:    a Text document
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTextSentimentText(
         text: NSURL,
         failure: (NSError -> Void)? = nil,
@@ -1113,6 +1349,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter target:  a pharse to target analysis towards
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTargetedSentimentURL(
         target: String,
         url: String,
@@ -1143,6 +1387,15 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter html:    a HTML document
+     - parameter target:  a pharse to target analysis towards
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTargetedSentimentHtml(
         html: NSURL,
         target: String,
@@ -1183,6 +1436,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Sentiment of given content.
+     
+     - parameter text:    a Text document
+     - parameter target:  a pharse to target analysis towards
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Sentiment information
+     */
     public func getTargetedSentimentText(
         text: NSURL,
         target: String,
@@ -1219,6 +1480,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Taxonomy of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Taxonomy information
+     */
     public func getRankedTaxonomyURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -1247,6 +1515,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Taxonomy of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Taxonomy information
+     */
     public func getRankedTaxonomyHtml(
         html: NSURL,
         url: String? = nil,
@@ -1285,6 +1561,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Calculates the Taxonomy of given content.
+     
+     - parameter text:    a Text document
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Taxonomy information
+     */
     public func getRankedTaxonomyText(
         text: NSURL,
         failure: (NSError -> Void)? = nil,
@@ -1319,6 +1602,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Raw Text of given content.
+     
+     - parameter url:     the URL of the content
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Raw Text information
+     */
     public func getRawTextURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -1347,6 +1637,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Raw Text of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Raw Text information
+     */
     public func getRawTextHtml(
         html: NSURL,
         url: String? = nil,
@@ -1385,6 +1683,15 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Text of given content.
+     
+     - parameter url:          the URL of the content
+     - parameter useMetadata:  whether to use metadata embeded in the webpage
+     - parameter extractLinks: whether to include hyperlinks in the extracted text
+     - parameter failure:      a function executed if the call fails
+     - parameter success:      a function executed with Text information
+     */
     public func getTextURL(
         url: String,
         useMetadata: Bool? = false,
@@ -1420,6 +1727,16 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Text of given content.
+     
+     - parameter html:         a HTML document
+     - parameter url:          a reference to where the HTML is located
+     - parameter useMetadata:  whether to use metadata embeded in the webpage
+     - parameter extractLinks: whether to include hyperlinks in the extracted text
+     - parameter failure:      a function executed if the call fails
+     - parameter success:      a function executed with Text information
+     */
     public func getTextHtml(
         html: NSURL,
         url: String? = nil,
@@ -1466,6 +1783,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Title of given content.
+     
+     - parameter url:          the URL of the content
+     - parameter failure:      a function executed if the call fails
+     - parameter success:      a function executed with Title information
+     */
     public func getTitleURL(
         url: String,
         useMetadata: Bool? = false,
@@ -1499,6 +1823,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Title of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Title information
+     */
     public func getTitleHtml(
         html: NSURL,
         url: String? = nil,
@@ -1541,6 +1873,13 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Feeds of given content.
+     
+     - parameter url:          the URL of the content
+     - parameter failure:      a function executed if the call fails
+     - parameter success:      a function executed with Feed information
+     */
     public func getFeedLinksURL(
         url: String,
         failure: (NSError -> Void)? = nil,
@@ -1569,6 +1908,14 @@ public class AlchemyLanguageV1 {
         }
     }
     
+    /**
+     Extracts the Feeds of given content.
+     
+     - parameter html:    a HTML document
+     - parameter url:     a reference to where the HTML is located
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Feeds information
+     */
     // Again, ther required URL parameter is a bug
     public func getFeedLinksHtml(
         html: NSURL,

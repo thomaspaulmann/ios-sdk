@@ -31,9 +31,9 @@ extension AlchemyLanguageV1 {
         public let text: String?
         
         public init(json: JSON) throws {
-            url = try json.string("url")
-            language = try json.string("language")
-            text = try json.string("text")
+            url = try? json.string("url")
+            language = try? json.string("language")
+            text = try? json.string("text")
         }
     }
 }

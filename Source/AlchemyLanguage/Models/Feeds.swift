@@ -33,10 +33,14 @@ extension AlchemyLanguageV1 {
         public let feeds: [Feed]?
         
         public init(json: JSON) throws {
-            totalTransactions = try Int(json.string("totalTransactions"))
-            language = try json.string("language")
-            url = try json.string("url")
-            feeds = try json.arrayOf("feeds", type: Feed.self)
+            if let totalTransactionString = try? json.string("totalTransactions") {
+                totalTransactions = Int(totalTransactionString)
+            } else {
+                totalTransactions = 1
+            }
+            language = try? json.string("language")
+            url = try? json.string("url")
+            feeds = try? json.arrayOf("feeds", type: Feed.self)
         }
     }
 }

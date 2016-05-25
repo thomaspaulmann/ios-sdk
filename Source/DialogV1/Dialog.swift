@@ -125,6 +125,7 @@ public class DialogV1 {
                 let nameData = name.dataUsingEncoding(NSUTF8StringEncoding)!
                 multipartFormData.appendBodyPart(data: nameData, name: "name")
                 multipartFormData.appendBodyPart(fileURL: fileURL, name: "file")
+                print(multipartFormData)
             },
             encodingCompletion: { encodingResult in
                 switch encodingResult {

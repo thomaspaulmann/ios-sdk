@@ -31,9 +31,13 @@ extension AlchemyLanguageV1 {
         public let score: Double?
         
         public init(json: JSON) throws {
-            confident = try json.string("confident")
-            label = try json.string("label")
-            score = try Double(json.string("score"))
+            confident = try? json.string("confident")
+            label = try? json.string("label")
+            if let scoreString = try? json.string("score") {
+                score = Double(scoreString)
+            } else {
+                score = nil
+            }
         }
     }
 }

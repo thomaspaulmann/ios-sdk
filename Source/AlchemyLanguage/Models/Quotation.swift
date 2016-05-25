@@ -27,7 +27,7 @@ extension AlchemyLanguageV1 {
         public let quotation: String?
         
         public init(json: JSON) throws {
-            quotation = try json.string("quotation")
+            quotation = try? json.string("quotation")
         }
     }
 }

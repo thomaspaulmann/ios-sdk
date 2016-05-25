@@ -36,14 +36,14 @@ extension AlchemyLanguageV1 {
         public let wikipedia: String?
         
         public init(json: JSON) throws {
-            language = try json.string("language")
-            url = try json.string("url")
-            ethnologue = try json.string("ethnologue")
-            iso6391 = try json.string("iso-639-1")
-            iso6392 = try json.string("iso-639-2")
-            iso6393 = try json.string("iso-639-3")
-            nativeSpeakers = try json.string("native-speakers")
-            wikipedia = try json.string("wikipedia")
+            language = try? json.string("language")
+            url = try? json.string("url")
+            ethnologue = try? json.string("ethnologue")
+            iso6391 = try? json.string("iso-639-1")
+            iso6392 = try? json.string("iso-639-2")
+            iso6393 = try? json.string("iso-639-3")
+            nativeSpeakers = try? json.string("native-speakers")
+            wikipedia = try? json.string("wikipedia")
         }
     }
 }

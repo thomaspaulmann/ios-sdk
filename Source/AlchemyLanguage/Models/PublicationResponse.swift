@@ -30,9 +30,9 @@ extension AlchemyLanguageV1 {
             } else {
                 totalTransactions = 1
             }
-            language = try json.string("language")
-            url = try json.string("url")
-            publicationDate = try json.decode("publicationDate", type: PublicationDate.self)
+            language = try? json.string("language")
+            url = try? json.string("url")
+            publicationDate = try? json.decode("publicationDate", type: PublicationDate.self)
         }
     }
 }

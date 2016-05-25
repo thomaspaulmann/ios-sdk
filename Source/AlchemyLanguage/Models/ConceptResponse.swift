@@ -40,7 +40,7 @@ extension AlchemyLanguageV1 {
             } else {
                 totalTransactions = 1
             }
-            concepts = try json.arrayOf("concepts", type: Concept.self)
+            concepts = try? json.arrayOf("concepts", type: Concept.self)
         }
     }
 }

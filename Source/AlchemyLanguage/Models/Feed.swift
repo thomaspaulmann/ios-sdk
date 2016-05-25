@@ -29,7 +29,7 @@ extension AlchemyLanguageV1 {
         public let feed: String?
         
         public init(json: JSON) throws {
-            feed = try json.string("feed")
+            feed = try? json.string("feed")
         }
     }
 }

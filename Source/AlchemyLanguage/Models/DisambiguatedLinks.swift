@@ -69,22 +69,22 @@ extension AlchemyLanguageV1 {
         public let yago: String?
         
         public init(json: JSON) throws {
-            language = try json.string("language")
-            url = try json.string("url")
-            census = try json.string("census")
-            ciaFactbook = try json.string("ciaFactbook")
-            crunchbase = try json.string("crunchbase")
-            dbpedia = try json.string("dbpedia")
-            freebase = try json.string("freebase")
-            geo = try json.string("geo")
-            geonames = try json.string("geonames")
-            musicBrainz = try json.string("musicBrainz")
-            name = try json.string("name")
-            opencyc = try json.string("opencyc")
-            subType = try json.arrayOf("subType", type: Swift.String)
-            umbel = try json.string("umbel")
-            website = try json.string("website")
-            yago = try json.string("yago")
+            language = try? json.string("language")
+            url = try? json.string("url")
+            census = try? json.string("census")
+            ciaFactbook = try? json.string("ciaFactbook")
+            crunchbase = try? json.string("crunchbase")
+            dbpedia = try? json.string("dbpedia")
+            freebase = try? json.string("freebase")
+            geo = try? json.string("geo")
+            geonames = try? json.string("geonames")
+            musicBrainz = try? json.string("musicBrainz")
+            name = try? json.string("name")
+            opencyc = try? json.string("opencyc")
+            subType = try? json.arrayOf("subType", type: Swift.String)
+            umbel = try? json.string("umbel")
+            website = try? json.string("website")
+            yago = try? json.string("yago")
         }
     }
 }

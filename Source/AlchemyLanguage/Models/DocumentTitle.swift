@@ -30,8 +30,8 @@ extension AlchemyLanguageV1 {
         public let title: String?
         
         public init(json: JSON) throws {
-            url = try json.string("url")
-            title = try json.string("title")
+            url = try? json.string("url")
+            title = try? json.string("title")
         }
     }
 }

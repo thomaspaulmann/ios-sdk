@@ -34,55 +34,15 @@ extension AlchemyLanguageV1 {
         public let docSentiment: Sentiment?
         
         public init(json: JSON) throws {
-            totalTransactions = try Int(json.string("totalTransactions"))
-            language = try json.string("language")
-            url = try json.string("url")
-            text = try json.string("text")
-            docSentiment = try json.decode("docSentiment", type: Sentiment.self)
+            if let totalTransactionsString = try? json.string("totalTransactions") {
+                totalTransactions = Int(totalTransactionsString)
+            } else {
+                totalTransactions = 1
+            }
+            language = try? json.string("language")
+            url = try? json.string("url")
+            text = try? json.string("text")
+            docSentiment = try? json.decode("docSentiment", type: Sentiment.self)
         }
     }
 }
-/*public struct SentimentResponse: AlchemyLanguageGenericModel, Mappable {
-    
-    // MARK: AlchemyGenericModel
-    public var totalTransactions: Int?
-    
-    // MARK: AlchemyLanguageGenericModel
-    public var language: String?
-    public var url: String?
-    
-    // MARK: DocSentiment
-    /** response when normal sentimented call is used */
-    public var docSentiment: Sentiment?                     // Normal
-
-    /** response when targeted sentimented call is used */
-    public var sentimentResults: [DocumentSentiment]?       // Targeted
-
-    /** (undocumented) */
-    public var usage: String?
-
-    /** warnings about incorrect usage or failures in detection */
-    public var warningMessage: String?
-
-    
-    public init?(_ map: Map) {}
-    
-    public mutating func mapping(map: Map) {
-        
-        // alchemyGenericModel
-        totalTransactions <- (map["totalTransactions"], Transformation.stringToInt)
-        
-        // alchemyLanguageGenericModel
-        language <- map["language"]
-        url <- map["url"]
-        
-        // sentiment - alchemyLanguage sometimes returns as "docSentiment," sometimes as "sentiment"
-        docSentiment <- map["docSentiment"]
-        sentimentResults <- map["results"]
-
-        usage <- map["usage"]
-        warningMessage <- map["warningMessage"]
-        
-    }
-    
-}*/

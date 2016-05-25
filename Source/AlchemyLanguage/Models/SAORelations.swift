@@ -32,10 +32,10 @@ extension AlchemyLanguageV1 {
         public let relations: [SAORelation]?
         
         public init(json: JSON) throws {
-            language = try json.string("language")
-            url = try json.string("url")
-            text = try json.string("text")
-            relations = try json.arrayOf("relations", type: SAORelation.self)
+            language = try? json.string("language")
+            url = try? json.string("url")
+            text = try? json.string("text")
+            relations = try? json.arrayOf("relations", type: SAORelation.self)
         }
     }
 }

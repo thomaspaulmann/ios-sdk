@@ -58,28 +58,36 @@ public class AlchemyLanguageV1 {
     }
     
     private func buildBody(document: NSURL, html: Bool) throws -> NSData {
-        guard let docAsString = try? String(contentsOfURL: document)
-            .stringByAddingPercentEncodingWithAllowedCharacters(unreservedCharacters) else {
+        let body = try buildBody(fromText: String(contentsOfURL: document), html: html)
+
+        return body
+    }
+
+    private func buildBody(fromText text: String, html: Bool) throws -> NSData {
+        guard let docAsString = text.stringByAddingPercentEncodingWithAllowedCharacters(unreservedCharacters) else {
                 let failureReason = "Profile could not be escaped."
                 let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
                 let error = NSError(domain: errorDomain, code: 0, userInfo: userInfo)
                 throw error
         }
+
         let type: String
         if html == true {
             type = "html"
         } else {
             type = "text"
         }
-        guard let body = "\(type)=\(docAsString!)".dataUsingEncoding(NSUTF8StringEncoding) else {
+
+        guard let body = "\(type)=\(docAsString)".dataUsingEncoding(NSUTF8StringEncoding) else {
             let failureReason = "Profile could not be encoded."
             let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
             let error = NSError(domain: errorDomain, code: 0, userInfo: userInfo)
             throw error
         }
+
         return body
     }
-    
+
     /**
      Extracts the Author(s) of given content.
      
@@ -2071,25 +2079,50 @@ public class AlchemyLanguageV1 {
     /**
      Extracts the Emotion of given content.
      
-     - parameter text:    a Text document
-     - parameter failure: a function executed if the call fails
-     - parameter success: a function executed with Feed information
+     - parameter textDocument: a Text document
+     - parameter failure:      a function executed if the call fails
+     - parameter success:      a function executed with Feed information
      */
     public func getEmotion(
-        forText text: NSURL,
+        forTextDocument textDocument: NSURL,
         failure: (NSError -> Void)? = nil,
         success: DocumentEmotion -> Void)
     {
         
-        // construct body
-        let body = try? buildBody(text, html: false)
+        // extract text from document
+        guard let text = try? String(contentsOfURL: textDocument) else {
+            let failureReason = "Text could not be extracted from document."
+            let userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
+            let error = NSError(domain: errorDomain, code: 0, userInfo: userInfo)
+            failure?(error)
+            return
+        }
         
+        getEmotion(forText: text, failure: failure, success: success)
+    }
+
+    /**
+     Extracts the Emotion of given content.
+
+     - parameter text:    a Text
+     - parameter failure: a function executed if the call fails
+     - parameter success: a function executed with Feed information
+     */
+    public func getEmotion(
+        forText text: String,
+        failure: (NSError -> Void)? = nil,
+        success: DocumentEmotion -> Void)
+    {
+
+        // construct body
+        let body = try? buildBody(fromText: text, html: false)
+
         // construct query paramerters
         var queryParams = [NSURLQueryItem]()
-        
+
         queryParams.append(NSURLQueryItem(name: "apikey", value: apiKey))
         queryParams.append(NSURLQueryItem(name: "outputMode", value: "json"))
-        
+
         // construct request
         let request = RestRequest(
             method: .POST,
@@ -2098,7 +2131,7 @@ public class AlchemyLanguageV1 {
             messageBody: body,
             queryParameters: queryParams
         )
-        
+
         // execute request
         Alamofire.request(request)
             .responseObject(dataToError: dataToError) {

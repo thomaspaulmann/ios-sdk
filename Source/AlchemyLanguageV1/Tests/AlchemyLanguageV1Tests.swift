@@ -620,20 +620,39 @@ class AlchemyLanguageV1Tests: XCTestCase {
         waitForExpectations()
     }
     
-    func testGetEmotionText() {
+    func testGetEmotionTextDocument() {
         let description = "Get the feeds of an Ars article"
         let expectation = expectationWithDescription(description)
         
         let url = NSBundle(forClass: self.dynamicType).URLForResource("testText", withExtension: "txt")
         
-        service.getEmotion(forText: url!, failure: failWithError) { emotion in
+        service.getEmotion(forTextDocument: url!, failure: failWithError) { emotion in
             XCTAssertNotNil(emotion, "Response should not be nil")
             XCTAssertNotNil(emotion.docEmotions, "Feeds should not be nil")
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
+    func testGetEmotionText() {
+        let description = "Get the feeds of an Ars article"
+        let expectation = expectationWithDescription(description)
+
+        let url = NSBundle(forClass: self.dynamicType).URLForResource("testText", withExtension: "txt")
+
+        guard let text = try? String(contentsOfURL: url!) else {
+            XCTAssert(true, "No valid text file")
+            return
+        }
+
+        service.getEmotion(forText:  text, failure: failWithError) { emotion in
+            XCTAssertNotNil(emotion, "Response should not be nil")
+            XCTAssertNotNil(emotion.docEmotions, "Feeds should not be nil")
+            expectation.fulfill()
+        }
+        waitForExpectations()
+    }
+
     // Negative Unit Tests
     
     func testInvalidURL() {

@@ -15,12 +15,12 @@
  **/
 
 import XCTest
-import ConversationV1
+import ConversationV1Experimental
 
 class ConversationTests: XCTestCase {
     
     private var conversation: Conversation!
-    private let timeout: NSTimeInterval = 30.0
+    private let timeout: NSTimeInterval = 5.0
 
     // MARK: - Test Configuration
 

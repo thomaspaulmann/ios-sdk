@@ -15,12 +15,12 @@
  **/
 
 import XCTest
-import RelationshipExtractionV1
+import RelationshipExtractionV1Beta
 
 class RelationshipExtractionTests: XCTestCase {
     
     private var relationshipExtraction: RelationshipExtraction!
-    private let timeout: NSTimeInterval = 30.0
+    private let timeout: NSTimeInterval = 5.0
     
     private let text = "The president’s trip was designed to reward Milwaukee for its success " +
         "in signing up people for coverage. It won a competition called the Healthy " +

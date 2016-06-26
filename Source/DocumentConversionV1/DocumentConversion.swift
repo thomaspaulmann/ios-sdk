@@ -25,13 +25,13 @@ import RestKit
  JSON-formatted Answer units that can be used with other Watson services, like the
  Watson Retrieve and Rank Service.
  */
-public class DocumentConversionV1 {
+public class DocumentConversion {
     
     private let username: String
     private let password: String
     private let serviceURL: String
     private let version: String
-    private let userAgent = buildUserAgent("watson-apis-ios-sdk/0.3.1 DocumentConversionV1")
+    private let userAgent = buildUserAgent("watson-apis-ios-sdk/0.4.0 DocumentConversionV1")
     private let domain = "com.ibm.watson.developer-cloud.DocumentConversionV1"
     
     /**
